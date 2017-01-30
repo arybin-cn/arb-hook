@@ -34,7 +34,7 @@ module Arb
 
 
       Module.send :define_method,:hook_method do |name,&blk|
-        proxy_block = Proc.new do |method,*args,&block|
+        proxy_block = blk && Proc.new do |method,*args,&block|
           blk[*args,&blk]
         end
         hook_methods(/^#{Regexp.escape(name.to_s)}$/,&proxy_block).size>0
